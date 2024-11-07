@@ -36,8 +36,8 @@
 
 <h2 id="screenshots">Screenshots</h2>
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/556bcac5-2072-44f1-9e41-ab862fa111db" width="500" alt="Screenshot"/>
-    <img src="https://github.com/user-attachments/assets/2f5ae650-c94f-4f49-aefd-b2feb859d43a" width="500" alt="Screenshot"/>
+    <img src="https://github.com/user-attachments/assets/556bcac5-2072-44f1-9e41-ab862fa111db" width="900" alt="Screenshot"/>
+    <img src="https://github.com/user-attachments/assets/2f5ae650-c94f-4f49-aefd-b2feb859d43a" width="900" alt="Screenshot"/>
 </div>
 
 <h2 id="getting-started">🚀 Getting Started</h2>
