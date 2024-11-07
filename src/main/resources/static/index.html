@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Employee Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+            /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background: linear-gradient(135deg, #4a90e2, #6f42c1);
+            padding: 20px 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a90e2, #6f42c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            overflow: hidden;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        thead {
+            background: linear-gradient(to right, #4a90e2, #6f42c1);
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        tbody tr {
+            background: #f9f9f9;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f3f7fc;
+        }
+
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        button {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            transition: background 0.3s ease;
+        }
+
+            .edit-btn {
+                background: linear-gradient(135deg, #4a90e2, #007bbd); /* Example gradient for edit button */
+            }
+
+            .delete-btn {
+                background: linear-gradient(135deg, #e74c3c, #c0392b); /* Example gradient for delete button */
+            }
+
+            .add-btn {
+                background: linear-gradient(135deg, #6f42c1, #5a3e99); /* Example gradient for add button */
+            }
+
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+            .modal-content {
+                background-color: #fefefe;
+                margin: 10% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%;
+                display: flex;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+        }
+            .modern-select {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                color: #333;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23333' d='M0 4l6 6 6-6z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 12px;
+                transition: border-color 0.3s;
+            }
+
+            .modern-select:focus {
+                border-color: #777;
+                outline: none;
+            }
+
+        .close-modal {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+            .avatar-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 200px;
+                margin-top: 150px;
+            }
+            .avatar-container img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 10px;
+                cursor: pointer;
+                border: 4px solid #ccc;
+                transition: border-color 0.3s ease;
+            }
+            .avatar-container img:hover {
+                border-color: #28a745;
+            }
+            .save-btn {
+                background-color: #28a745;
+                color: #fff;
+            }
+            .form-container input,
+            .form-container select,
+            .form-container button {
+                margin-bottom: 10px;
+                padding: 8px;
+                font-size: 16px;
+            }
+            .cancel-btn {
+                background-color: #f44336; /* Red color */
+                color: white;
+                padding: 10px;
+                margin-top: 5px;
+                border: none;
+                cursor: pointer;
+            }
+            .modern-select {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 0.5rem center;
+                background-size: 1.5em;
+                padding-right: 2rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Employee Directory</h1>
+    <button class="add-btn" onclick="openModal('add')">
+        <i class="fas fa-plus"></i> Add Employee
+    </button>
+    <table>
+        <thead>
+        <tr>
+
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Job Title</th>
+            <th>Manager</th>
+            <th>Hire Date</th>
+            <th>Salary</th>
+            <th>Commission</th>
+            <th>Department</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="employees"></tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div id="employeeModal" class="modal">
+    <!-- Modal Content -->
+    <div class="modal-content">
+
+        <div class="avatar-container">
+            <!-- Clicking the avatar triggers the file input -->
+            <label for="empImgFile">
+                <img id="empAvatar" src="images.png" alt="Avatar Placeholder" style="cursor: pointer;">
+
+            </label>
+            <input type="file" id="empImgFile" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+            <input type="hidden" id="empImg" placeholder="Image Filename">
+        </div>
+        <div class="form-container">
+            <h2 id="modalTitle">Add Employee</h2>
+
+            <input type="text" id="empId" placeholder="Employee ID" readonly>
+            <input type="text" id="empName" placeholder="Name">
+            <input type="text" id="empJob" placeholder="Job Title">
+
+            <input type="date" id="empHireDate" placeholder="Hire Date">
+            <input type="number" id="empSal" placeholder="Salary">
+            <input type="number" id="empComm" placeholder="Commission">
+            <!-- Updated department field -->
+            <select id="empDept" class="modern-select">
+                <option value="">Select Department</option>
+                <option value="10">ACCOUNTING</option>
+                <option value="20">RESEARCH</option>
+                <option value="30">SALES</option>
+                <option value="40">OPERATION</option>
+            </select>
+            <select id="empMgr" class="modern-select">
+                <option value="">Select Manager</option>
+            </select>
+            <button class="save-btn" onclick="saveEmployee()">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="cancel-btn" onclick="closeModal()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const imageMap = {};
+    let currentMode = 'add';
+    let editEmpId = null;
+
+    fetch('/images')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(url => {
+                const filename = url.split('/').pop();
+                imageMap[filename] = url;
+            });
+            fetchEmployees();
+        })
+        .catch(error => console.error('Error fetching images:', error));
+
+    function fetchEmployees() {
+        fetch('/api/employees')
+            .then(response => response.json())
+            .then(employees => {
+                const empTable = document.getElementById('employees');
+                empTable.innerHTML = ''; // Clear table before loading new data
+                employees.forEach(emp => {
+                    empTable.appendChild(createEmployeeRow(emp));
+                });
+            })
+            .catch(error => console.error('Error fetching employees:', error));
+    }
+
+    function createEmployeeRow(emp) {
+        const empRow = document.createElement('tr');
+        const imgUrl = emp.img && emp.img.startsWith("http") ? emp.img : (imageMap[emp.img] || '/images/default.jpg');
+
+        empRow.innerHTML = `
+        <td>${emp.empno || ''}</td>
+        <td>${emp.ename || ''}</td>
+        <td>${emp.job || ''}</td>
+        <td>${emp.mgr || ''}</td>
+        <td>${emp.hiredate || ''}</td>
+        <td>${emp.sal || ''}</td>
+        <td>${emp.comm !== null && emp.comm !== 0 ? emp.comm : ''}</td>
+        <td>${emp.dept ? emp.dept.dname : ''}</td>
+        <td><img src="${imgUrl}" alt="${emp.ename || 'Employee Image'}"></td>
+        <td class="actions">
+            <button class="edit-btn" onclick="openModal('edit',
+                ${emp.empno},
+                '${emp.ename}',
+                '${emp.job}',
+                '${emp.mgr}',
+                '${emp.hiredate}',
+                ${emp.sal},
+                ${emp.comm},
+                '${emp.img || 'images.png'}',
+                '${emp.dept ? emp.dept.dname : ''}')">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="delete-btn" onclick="deleteEmployee(${emp.empno})">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </td>
+    `;
+
+        return empRow;
+    }
+
+
+
+    function generateUniqueId() {
+        return Math.floor(100000 + Math.random() * 900000); // 6 haneli rastgele sayı
+    }
+
+    function openModal(mode, empId = null, ename, job, mgr, hiredate, sal, comm, img, dept) {
+        currentMode = mode;
+        editEmpId = empId;
+        document.getElementById('employeeModal').style.display = 'flex';
+        document.getElementById('modalTitle').innerText = mode === 'add' ? 'Add Employee' : 'Edit Employee';
+        document.getElementById('empAvatar').src = 'images.png';
+
+        // Clear previous options in Manager dropdown
+        const managerSelect = document.getElementById('empMgr');
+        managerSelect.innerHTML = '<option value="">Select Manager</option>';
+
+
+        if (mode === 'edit' && empId) {
+
+            fetch(`/api/employees/${empId}`, { method: 'GET' })
+
+                .then(response => response.json())
+                .then(emp => {        console.log(emp); // Log the entire employee object
+
+                    document.getElementById('empId').value = empId || '';
+                    document.getElementById('empName').value = ename || '';
+                    document.getElementById('empJob').value = job || '';
+                    document.getElementById('empMgr').value = mgr || '';
+                    document.getElementById('empHireDate').value = hiredate || '';
+                    document.getElementById('empSal').value = sal || '';
+                    document.getElementById('empComm').value = comm || '';
+                    document.getElementById('empAvatar').src = 'images.png';
+                    // Populate the manager list based on the employee's department
+                })
+                .catch(error => console.error('Error fetching employee data:', error));
+        } else {
+            // Reset form fields and generate random IDs for add mode
+            document.querySelectorAll('.modal-content input').forEach(input => input.value = '');
+            document.getElementById('empDept').value = ''; // Reset department selection
+            document.getElementById('empId').value = generateUniqueId(); // Generate random Employee ID
+
+            // Load all employees as potential managers when in "add" mode
+            loadManagers();
+        }
+
+        // Add an event listener to update managers when department changes
+        document.getElementById('empDept').addEventListener('change', (event) => {
+            loadManagers(event.target.value);
+        });
+    }
+
+    // Load managers based on department selection
+    function loadManagers(departmentId = '') {
+        fetch('/api/employees')
+            .then(response => response.json())
+            .then(employees => {
+                const managerSelect = document.getElementById('empMgr');
+                managerSelect.innerHTML = '<option value="">Select Manager</option>'; // Reset options
+
+                // Filter employees by department if a department is selected
+                const filteredEmployees = departmentId ? employees.filter(emp => emp.deptno == departmentId) : employees;
+
+                // Populate the Manager dropdown with Employee IDs
+                filteredEmployees.forEach(emp => {
+                    const option = document.createElement('option');
+                    option.value = emp.empno;
+                    option.text = `${emp.ename} (ID: ${emp.empno})`;
+                    managerSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching managers:', error));
+    }
+
+
+    function handleImageUpload(input) {
+        const file = input.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("userId", document.getElementById('empId').value); // or a unique identifier for the employee
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(imageUrl => {
+                    console.log("Image uploaded successfully:", imageUrl);
+                    // Store the image URL in the hidden input to save with employee data
+                    document.getElementById('empImg').value = imageUrl;
+                    // Update the avatar image
+                    document.getElementById('empAvatar').src = imageUrl;
+                })
+                .catch(error => console.error('Error uploading image:', error));
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('employeeModal').style.display = 'none';
+        document.getElementById('empAvatar').src = 'images.png';     }
+
+    function saveEmployee() {
+        const empData = {
+            empno: parseInt(document.getElementById('empId').value),
+            ename: document.getElementById('empName').value,
+            job: document.getElementById('empJob').value,
+            mgr: parseInt(document.getElementById('empMgr').value),
+            hiredate: document.getElementById('empHireDate').value,
+            sal: parseFloat(document.getElementById('empSal').value),
+            comm: parseFloat(document.getElementById('empComm').value),
+            deptno: parseInt(document.getElementById('empDept').value) , // Save selected department
+            img: document.getElementById('empImg').value
+        };
+
+
+
+        if (currentMode === 'add') {
+            fetch('/api/employees', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(empData)
+            }).then(() => fetchEmployees());
+        } else if (currentMode === 'edit') {
+            fetch(`/api/employees/${editEmpId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(empData)
+            }).then(() => fetchEmployees());
+        }
+
+        closeModal();
+    }
+
+    function deleteEmployee(empId) {
+        fetch(`/api/employees/${empId}`, { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) {
+                    alert("Employee deleted successfully.");
+                    // Refresh the page to confirm deletion
+                    location.reload();
+                } else if (response.status === 404) {
+                    alert("Employee not found.");
+                } else {
+                    alert("An error occurred while deleting the employee.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            });
+    }
+
+
+
+</script>
+</body>
+</html>
