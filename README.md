@@ -2,7 +2,7 @@
     <h3>Spring Boot + AWS S3 Integration for Employee Management</h3>
 <p align="center">
     <img src="https://miro.medium.com/v2/resize:fit:1280/0*lrhD8e1zlemTCUvT.png" alt="Spring Boot Logo" width="200"/>
-    <img src="https://www.google.com/search?sca_esv=6fa4053b1bfce2fa&rlz=1C1GCEA_enTR1093TR1093&sxsrf=ADLYWIJvOaPtXrA7f_PfxEQVnrXbc1WaAQ:1731008682343&q=spring+boot+png+logo&udm=2&fbs=AEQNm0CgMcZ11KbHg1uunEmuo39LYaLxf_n_v5Qu9vkTINnKPNxSSRV--bGiJa6CXOAP_ugPFhSqVl_67Ejso-Ggkj9PxpCPkGM5OdNmxhREkjStggQbcgI9d0E71zBeVfytCHdPUCGOP5kAdZAI9qK9DsXTgNLuSC5QDJ39OD_e4jLFy07Ghgky4BnmGDywGvRAWqGDk2Ax&sa=X&ved=2ahUKEwj0wfTs_cqJAxWuQvEDHc0ZGP8QtKgLegQIFxAB&biw=1707&bih=772&dpr=1.13#vhid=h1GXkw2I0ZPN2M&vssid=mosaic" alt="AWS S3 Logo" width="200"/>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8i4zPog-0j0JR_yZglxPhTPZXxN2iMTQ3Dw&s" alt="AWS S3 Logo" width="200"/>
 </p>
     <p>A project that integrates Spring Boot, PostgreSQL, and AWS S3 to manage employee data and images with CRUD operations displayed on a web interface.</p>
     <br/>
